@@ -12,18 +12,13 @@ node { //optionally add node label: node (‘slave1’)
      sh "${gradle4}/bin/gradle test"
      junit "build/test-results/junit-platform/*.xml"
  }
- stage ('int-test')
+ stage ('func-test')
  {
-     branches = [:]
-     for (i=1; i<=3; i++){
-         branches["${i}"] = {
-            testData = readFile "test-data/names${i}"
-            println testData
-            entry = testData.split(':')
-            sh script : "test-data/int-test.sh build/libs/oto-gradle-1.0.jar ${entry[0]} '${entry[1]}'"
-         }
-      }
-      parallel branches
-    }
+     cmd_prefix = "test-data/int-test.sh build/libs/oto-gradle-1.0.jar"
+     tests = ["one" : { sh "${cmd_prefix} otomato 'Hello Otomato!'"},
+              "two" : { sh "${cmd_prefix} ''  'Hello Gradle!'"},
+              "three" : { sh "${cmd_prefix} 'micrO'  'Hello Micro!'"}]
+      parallel tests
+ }
 
  }
