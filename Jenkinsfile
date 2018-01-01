@@ -14,18 +14,13 @@ node { //optionally add node label: node (‘slave1’)
  }
  stage ('int-test')
  {
-     testData = readFile "test-data/names"
-     println testData
-     tests = testData.split('\n')
      branches = [:]
-     for (test in tests){
-         println "line is $test"
-         entry = test.split(':')
-         println "setting branch ${entry[0]} to use ${entry[1]}"
-         key = entry[0]
-         value = entry[1]
-         branches[key] = {
-            sh script : "test-data/int-test.sh build/libs/oto-gradle-1.0.jar ${key} '${value}'"
+     for (i=1; i<=3; i++){
+         branches["${i}"] = {
+            testData = readFile "test-data/names${i}"
+            println testData
+            entry = testData.split(':')
+            sh script : "test-data/int-test.sh build/libs/oto-gradle-1.0.jar ${entry[0]} '${entry[1]}'"
          }
       }
       parallel branches
