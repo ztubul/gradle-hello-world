@@ -5,7 +5,7 @@ node { //optionally add node label: node (‘slave1’)
  }
  stage ('build')
  {
-     sh "${gradle4}/bin/gradle jar"
+     sh "${gradle4}/bin/gradle clean jar"
  }
  stage ('unit-test')
  {
@@ -21,8 +21,11 @@ node { //optionally add node label: node (‘slave1’)
      for (test in tests){
          println "line is $test"
          entry = test.split(':')
-         branches["${entry[0]}"] = {
-            sh script : "test-data/int-test.sh build/libs/oto-gradle-1.0.jar ${entry[0]} '${entry[1]}'"
+         println "setting branch ${entry[0]} to use ${entry[1]}"
+         key = entry[0]
+         value = entry[1]
+         branches[key] = {
+            sh script : "test-data/int-test.sh build/libs/oto-gradle-1.0.jar ${key} '${value}'"
          }
       }
       parallel branches
