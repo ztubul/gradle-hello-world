@@ -1,4 +1,4 @@
-node('slave1') {
+node('Jenkins') {
      gradle4 = tool 'gradle4'
      stage ('chekcout'){
         checkout scm
