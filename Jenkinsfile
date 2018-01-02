@@ -1,4 +1,4 @@
-node('Jenkins') {
+node('master') {
      gradle4 = tool 'gradle4'
      stage ('chekcout'){
         checkout scm
