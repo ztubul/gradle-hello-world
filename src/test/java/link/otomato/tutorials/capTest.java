@@ -7,4 +7,9 @@ class capTest {
     void capTest() {
         assert HelloGradle.capitalize("nAMe") == "Name";
     }
+    
+    @Test
+    void failTest() {
+        assert true == false;
+    }
 }
