@@ -7,3 +7,4 @@ stage ('checkout'){
  sh "${gradle1/bin/gradle build"
  }
  }
+}
