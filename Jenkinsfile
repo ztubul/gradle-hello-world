@@ -4,6 +4,6 @@ stage ('checkout'){
  }
  stage ('build'){
  def gradle1 = tool 'gradle4'
- sh "${gradlehome/bin/gradle build"
+ sh "${gradle1/bin/gradle build"
  }
  }
